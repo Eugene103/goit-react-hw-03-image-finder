@@ -25,7 +25,9 @@ Modal.setAppElement('#root');
 export const ModalImg = ({state, onClose, imageUrl, tags}) => {
     return <Modal 
                  isOpen={state}
-                onRequestClose={onClose}
+      onRequestClose={onClose}
+      shouldCloseOnOverlayClick={true}
+      shouldCloseOnEsc={true}
                     style={customStyles}
                     contentLabel="Example Modal"
             ><ImagModal src={imageUrl} alt={tags}></ImagModal></Modal>

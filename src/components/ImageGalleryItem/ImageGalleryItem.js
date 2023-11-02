@@ -15,7 +15,7 @@ state = {
     render() {
         const { item: { webformatURL, largeImageURL, tags } } = this.props
 
-        return < ><Image src={webformatURL} alt={tags}  onClick={this.openModal} />
+        return < ><Image src={webformatURL} alt={tags}  onClick={this.openModal}></Image>
                 <ModalImg state={this.state.setIsOpen} onClose={this.closeModal} imageUrl={largeImageURL} tags={tags} />
                 </>
     }
