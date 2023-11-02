@@ -16,15 +16,22 @@ export class App extends Component{
   };
   
   async componentDidUpdate(prevProps, prevState) {
-  if (prevState.descriptor !== this.state.descriptor ||
+    if (prevState.descriptor !== this.state.descriptor ||
       prevState.page !== this.state.page) {
       const { page, descriptor} = this.state
-    try {
-      this.setState({loading: true, error: false})
-      const images = await fetchImages(page, descriptor);
-      this.setState({imageItem: images})
+      try {
+        this.setState({ loading: true, error: false })
+        const images = await fetchImages(page, descriptor);
+        if (this.state.imageItem.length === 0) {
+          this.setState({ imageItem: images })
+          return
+        }
+        this.setState((prevState) =>
+          (prevState.imageItem.hits.push(...images.hits),
+          this.state.imageItem.total = images.total))   
     } catch (error) {
-      this.setState({ error: true })
+        this.setState({ error: true })
+        console.log(error)
       alert(`Reload page`)
     } finally {
       this.setState({loading: false})
@@ -35,6 +42,7 @@ export class App extends Component{
     this.setState({
       descriptor: value,
       page: 1,
+      imageItem: [],
     })
     
   }
@@ -43,17 +51,12 @@ export class App extends Component{
       page: prevState.page + 1
     }))
   }
-  checkHitsLength = () => {
-    if (this.state.imageItem.length === 0) {
-      return
-    } return this.state.imageItem.hits.length
-  }
   render() {
     return <Layot>
       <SearchBar onChange={this.changeDescriptor} />
       <Loader visible={this.state.loading} />
       {this.state.imageItem.totalHits > 0 && <ImageGallery images={this.state.imageItem} />}
-      {this.checkHitsLength() === 12 && <Button onChange={this.changePage} />}
+      {this.state.imageItem.total >= 12 && <Button onChange={this.changePage} />}
     </Layot>
   }
 }

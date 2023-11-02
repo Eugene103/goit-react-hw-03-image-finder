@@ -1,5 +1,6 @@
 import { Formik } from "formik"
-import { Searchbar, SearchForm,  Input, Btn, BtnLabel } from "./SearchBar.styled";
+import { Searchbar, SearchForm,  Input, Btn } from "./SearchBar.styled";
+import { AiOutlineSearch } from "react-icons/ai";
 
 export const SearchBar = ({onChange}) => {
     return  <Formik
@@ -11,7 +12,7 @@ export const SearchBar = ({onChange}) => {
         }}
     ><Searchbar>
         <SearchForm>
-            <Btn type="submit"><BtnLabel>Search</BtnLabel></Btn>
+            <Btn type="submit"><AiOutlineSearch size='25px'/></Btn>
             <Input id="descriptor" name="descriptor" autoComplete="off" autoFocus placeholder="Search images and photos" />
         </SearchForm>
     </Searchbar>
