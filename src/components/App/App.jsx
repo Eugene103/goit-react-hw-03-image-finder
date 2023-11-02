@@ -25,10 +25,11 @@ export class App extends Component{
         if (this.state.imageItem.length === 0) {
           this.setState({ imageItem: images })
           return
-        }
-        this.setState((prevState) =>
-          (prevState.imageItem.hits.push(...images.hits),
-          this.state.imageItem.total = images.total))   
+        } 
+        this.setState((prevState) => (
+          // eslint-disable-next-line
+          prevState.imageItem.hits.push(...images.hits),
+          this.state.imageItem.total = images.total))
     } catch (error) {
         this.setState({ error: true })
         console.log(error)
@@ -39,12 +40,13 @@ export class App extends Component{
     }
   }
   changeDescriptor = (value) => {
-    this.setState({
+    if (this.state.descriptor === value) {
+      return
+    } this.setState({
       descriptor: value,
       page: 1,
       imageItem: [],
     })
-    
   }
   changePage = () => {
     this.setState(prevState => ({
